@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAStore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AStore xsi:type="ChicagoStore">
+    <name>ChicagoStore</name>
+    <address>1111 Codeview Ln.</address>
+  </AStore>
+  <AStore xsi:type="NewYorkStore">
+    <name>NewYorkStore</name>
+    <address>6879 VisualCode Rd.</address>
+  </AStore>
+  <AStore xsi:type="NewYorkStore">
+    <name>DownTownNewYorkStore</name>
+    <address>Coming Soon!</address>
+  </AStore>
+</ArrayOfAStore>

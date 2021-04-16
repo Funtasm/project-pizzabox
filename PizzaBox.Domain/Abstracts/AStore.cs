@@ -1,15 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+using PizzaBox.Domain.Models;
+
 namespace PizzaBox.Domain.Abstracts
 {
-    public abstract class AStore
+  [XmlInclude(typeof(ChicagoStore))]
+  [XmlInclude(typeof(NewYorkStore))]
+  public abstract class AStore
+  {
+    public string name { get; set; }
+    public string address { get; set; }
+    public AStore()
     {
-    public string name{ get; protected set;}
-        public AStore()
-        {
-            name = "Yet to be Named";
-        }
-        public override string ToString()
-        {
-            return name;
-        }
+      name = "Yet to be Named";
+      address = "Coming Soon!";
     }
+    public override string ToString()
+    {
+      return name;
+    }
+  }
 }
