@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPizzaComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PizzaComponent>
+    <Name>Small</Name>
+    <Price>1.00</Price>
+  </PizzaComponent>
+  <PizzaComponent>
+    <Name>Medium</Name>
+    <Price>4.00</Price>
+  </PizzaComponent>
+  <PizzaComponent>
+    <Name>Large</Name>
+    <Price>7.00</Price>
+  </PizzaComponent>
+</ArrayOfPizzaComponent>

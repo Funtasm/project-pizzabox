@@ -6,6 +6,7 @@ namespace PizzaBox.Client.Singletons
 {
   public class StoreSingleton
   {
+    private const string _path = @"store.xml";
     private static FileRepository _fr = new FileRepository();
     private static StoreSingleton _instance;
     public List<AStore> Stores { get; }
@@ -29,10 +30,9 @@ namespace PizzaBox.Client.Singletons
       //     new NewYorkStore()
       //   }); //There is no need to now write to file, unless for debugging purposes.
 
-      Stores = _fr.ReadFromFile(@"store.xml");
+      Stores = _fr.ReadFromFile<List<AStore>>(_path);
 
     }
-
 
     public static StoreSingleton Instance
     {

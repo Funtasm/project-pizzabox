@@ -7,11 +7,15 @@ using PizzaBox.Client.Singletons;
 using PizzaBox.Storing.Repositories;
 using System.Reflection;
 
+
 namespace PizzaBox.Client
 {
   public class Program
   {
+
     private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
+    private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
+
     private static FileRepository _fr = new FileRepository();
     static void Main()
     {
@@ -33,7 +37,8 @@ namespace PizzaBox.Client
     }
     private static void DoTheThing()
     {
-      PrintStoreList();
+      MeatPizza Test = new MeatPizza();
+
     }
     private static void PrintStoreList()
     {

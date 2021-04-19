@@ -1,40 +1,37 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using PizzaBox.Domain.Abstracts;
-using PizzaBox.Domain.Models;
 
 namespace PizzaBox.Storing.Repositories
 {
-  [XmlInclude(typeof(ChicagoStore))]
-  [XmlInclude(typeof(NewYorkStore))]
+  /// <summary>
+  /// 
+  /// </summary>
   public class FileRepository
   {
-
-    public List<AStore> ReadFromFile(string path)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public T ReadFromFile<T>(string path) where T : class
     {
-      {
 
-        var reader = new StreamReader(path);
+      var reader = new StreamReader(path);
+      var xml = new XmlSerializer(typeof(T));
 
-        var xml = new XmlSerializer(typeof(List<AStore>));
-
-        // return xml.Deserialize(reader) as List<AStore>; // if casting fails, ==> null POCOs, plain old csharp objects
-        return (List<AStore>)xml.Deserialize(reader); // if casting fails ==> exception
-      }
-
+      return xml.Deserialize(reader) as T;
     }
 
-    public void WriteToFile(string path, List<AStore> stores)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public static void WriteToFile<T>(string path, T items)
     {
 
       var writer = new StreamWriter(path);
-      var xml = new XmlSerializer(typeof(List<AStore>));
+      var xml = new XmlSerializer(typeof(T));
 
-      xml.Serialize(writer, stores);
-
-
+      xml.Serialize(writer, items);
 
     }
   }
