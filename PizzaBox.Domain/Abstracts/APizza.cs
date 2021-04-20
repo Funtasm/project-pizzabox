@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using PizzaBox.Domain.Models;
-using PizzaBox.Storing.Repositories;
+//using PizzaBox.Storing.Repositories;
 
 namespace PizzaBox.Domain.Abstracts
 {
@@ -25,7 +25,7 @@ namespace PizzaBox.Domain.Abstracts
   }
 
 
-  public abstract class APizza
+  public abstract class APizza : AModel
   {
     private string _SizePath = @"Data/pizzasize.xml";
     private string _CrustPath = @"Data/pizzacrust.xml";
@@ -48,6 +48,20 @@ namespace PizzaBox.Domain.Abstracts
     protected APizza(int CrustChoice, int SizeChoice, List<int> Toppings)
     {
 
+    }
+    /// <summary>
+    /// Simple price calculator, useable by any instance of APizza.
+    /// </summary>
+    /// <returns>decimal</returns>
+    public decimal GetPrice()
+    {
+      decimal Total;
+      Total = this.Crust.Price + this.Size.Price;
+      for (int i = 0; i < Toppings.Count; i++)
+      {
+        Total = Total + Toppings[i].Price;
+      }
+      return Total;
     }
 
 
@@ -77,19 +91,20 @@ namespace PizzaBox.Domain.Abstracts
       AllSizes = MenuReader(_SizePath);
       AllToppings = MenuReader(_ToppingsPath);
     }
-    private void CreateMenu()
-    {
-      PizzaComponent Crust1 = PizzaComponent.MakeComponent("Thin", 0.00m);
-      PizzaComponent Size1 = PizzaComponent.MakeComponent("Small", 1.00m);
-      PizzaComponent Topping1 = PizzaComponent.MakeComponent("Mozzerella", 1.00m);
-      AllCrusts.Add(Crust1);
-      AllSizes.Add(Size1);
-      AllToppings.Add(Topping1);
-      FileRepository.WriteToFile(_CrustPath, AllCrusts);
-      FileRepository.WriteToFile(_SizePath, AllSizes);
-      FileRepository.WriteToFile(_ToppingsPath, AllToppings);
-    }
+    // private void CreateMenu()
+    // {
+    // PizzaComponent Crust1 = PizzaComponent.MakeComponent("Thin", 0.00m);
+    // PizzaComponent Size1 = PizzaComponent.MakeComponent("Small", 1.00m);
+    // PizzaComponent Topping1 = PizzaComponent.MakeComponent("Mozzerella", 1.00m);
+    // AllCrusts.Add(Crust1);
+    // AllSizes.Add(Size1);
+    // AllToppings.Add(Topping1);
+    // FileRepository.WriteToFile(_CrustPath, AllCrusts);
+    // FileRepository.WriteToFile(_SizePath, AllSizes);
+    // FileRepository.WriteToFile(_ToppingsPath, AllToppings);
 
+    // }
+    //above requires a circular dependency, must create a private write to file in APizza to continue.
 
     /// <summary>
     /// 
