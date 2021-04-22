@@ -5,7 +5,9 @@ namespace PizzaBox.Domain.Models
 {
   public class Order : AModel
   {
-    public int OrderId { private set; get; }
+    public AStore Store;
+    public Customer Customer;
+    //public int OrderId { private set; get; }
     public List<APizza> Items { private set; get; }
     public decimal OrderTotal { private set; get; }
 
@@ -16,7 +18,11 @@ namespace PizzaBox.Domain.Models
     }
     private Order()
     {
-
+      Store = new NewYorkStore();
+      Customer = new Customer();
+      Customer.Name = "Johnny Test";
+      this.AddPizza(new MeatPizza());
+      //test for database
     }
 
 

@@ -41,7 +41,7 @@ namespace PizzaBox.Domain.Abstracts
     /// <summary>
     /// 
     /// </summary>
-    protected APizza()
+    public APizza()
     {
       ReadMenu();
     }

@@ -6,6 +6,7 @@ using PizzaBox.Domain.Models;
 using PizzaBox.Client.Singletons;
 using PizzaBox.Storing.Repositories;
 using System.Reflection;
+using PizzaBox.Storing;
 
 
 namespace PizzaBox.Client
