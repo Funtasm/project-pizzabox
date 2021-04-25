@@ -7,22 +7,6 @@ using PizzaBox.Domain.Models;
 
 namespace PizzaBox.Domain.Abstracts
 {
-  public struct PizzaComponent
-  {
-    public string Name;
-    public decimal Price;
-    /// <summary>
-    /// Allows for the adding of PizzaComponents to a <List>PizzaComponents without saving them prior.
-    /// </summary>
-
-    public static PizzaComponent MakeComponent(string x, decimal y)
-    {
-      PizzaComponent abc = new PizzaComponent();
-      abc.Price = y;
-      abc.Name = x;
-      return abc;
-    }
-  }
 
 
   public abstract class APizza : AModel
@@ -33,9 +17,12 @@ namespace PizzaBox.Domain.Abstracts
     protected static List<PizzaComponent> AllCrusts { get; private set; }
     protected static List<PizzaComponent> AllSizes { get; private set; }
     protected static List<PizzaComponent> AllToppings { get; private set; }
-    protected PizzaComponent Crust;
-    protected PizzaComponent Size;
-    protected List<PizzaComponent> Toppings;
+    public PizzaComponent Crust;
+    public PizzaComponent Size;
+
+    public List<PizzaComponent> Toppings = new List<PizzaComponent>();
+    public decimal Price { get; set; }
+    public long OrderID { get; set; }
 
 
     /// <summary>
@@ -53,7 +40,7 @@ namespace PizzaBox.Domain.Abstracts
     /// Simple price calculator, useable by any instance of APizza.
     /// </summary>
     /// <returns>decimal</returns>
-    public decimal GetPrice()
+    public void GetPrice()
     {
       decimal Total;
       Total = this.Crust.Price + this.Size.Price;
@@ -61,7 +48,7 @@ namespace PizzaBox.Domain.Abstracts
       {
         Total = Total + Toppings[i].Price;
       }
-      return Total;
+      Price = Total;
     }
 
 

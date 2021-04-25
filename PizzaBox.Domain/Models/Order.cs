@@ -5,24 +5,25 @@ namespace PizzaBox.Domain.Models
 {
   public class Order : AModel
   {
-    public AStore Store;
-    public Customer Customer;
-    //public int OrderId { private set; get; }
-    public List<APizza> Items { private set; get; }
-    public decimal OrderTotal { private set; get; }
+    public long StoreID { get; set; }
+
+    public long CustomerID { get; set; }
+    // public Customer Customer { get; set; }
+
+    public List<APizza> Items { set; get; } //= new List<APizza>();
+    public decimal OrderTotal { set; get; }
 
     public void AddPizza(APizza Pizza)
     {
-      this.Items.Add(Pizza);
-      this.OrderTotal = this.OrderTotal + Pizza.GetPrice();
+      Items.Add(Pizza);
+      OrderTotal = OrderTotal + Pizza.Price;
+      Pizza.OrderID = EntityID;
     }
-    private Order()
+    public Order(long tStoreID, long tCustomerID)
     {
-      Store = new NewYorkStore();
-      Customer = new Customer();
-      Customer.Name = "Johnny Test";
-      this.AddPizza(new MeatPizza());
-      //test for database
+      StoreID = tStoreID;
+      CustomerID = tCustomerID;
+      Items= new List<APizza>();
     }
 
 

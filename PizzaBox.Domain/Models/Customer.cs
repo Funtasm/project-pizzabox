@@ -5,6 +5,18 @@ namespace PizzaBox.Domain.Models
 {
   public class Customer : AModel
   {
-    public string Name;
+    public string Name { get; set; }
+    // public List<Order> Orders { get; set; }
+
+
+    public Customer()
+    {
+      Name = "Default";
+    }
+
+    public Customer(string n)
+    {
+      Name = n;
+    }
   }
 }

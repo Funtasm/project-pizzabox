@@ -13,6 +13,7 @@ namespace PizzaBox.Client
 {
   public class Program
   {
+    private static bool Restart = true;
 
     private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
     private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
@@ -20,26 +21,119 @@ namespace PizzaBox.Client
     private static FileRepository _fr = new FileRepository();
     static void Main()
     {
-      /*  //var stores = new List<AStore>{new ChicagoStore(), new NewYorkStore() };
-
-
-        for (int x = 0; x < _storeSingleton.Stores.Count; x += 1)
-        {
-            System.Console.WriteLine($"{x} {_storeSingleton.Stores[x]}");//string interpolation, {} represent variables, while the rest is added in as text for the string
-        }
-
-        var input = System.Console.ReadLine(); //could use string instead of var, because it always returns string anyways.
-        int entry = int.Parse(input);
-
-        sc.WriteLine(_storeSingleton.Stores[entry]); // sc can be used now instead of System.Console or Console
-        */
-      //this does not work above for some reason in printing the names.
       DoTheThing();
     }
     private static void DoTheThing()
     {
-      MeatPizza Test = new MeatPizza();
 
+      while (Restart)
+      {
+        Console.WriteLine(
+  @"Welcome to PizzaBox!
+Would you like to make an order, check a store's order history, or check your own order history?
+1: Start an Order.
+2: Check a stores Order History
+3: Check your Order History.
+0: Quit.
+      ");
+
+        switch (Answer(0, 3))
+        {
+          case 1:
+            {
+              Restart = false;
+              StartOrder();
+              break;
+            }
+          case 2:
+            {
+
+              Restart = false;
+              break;
+            }
+          case 3:
+            {
+
+              Restart = false;
+              break;
+            }
+          case 0:
+            {
+
+              Restart = false;
+              break;
+            }
+          default:
+            {
+              Console.WriteLine("You did not input a valid choice. Please input 1, 2, 3, or 0.");
+
+              break;
+            }
+        }
+      }
+      // using (var context = new PizzaBoxContext())
+      // {
+      //   context.Orders.Add(Test);
+      //   context.SaveChanges();
+      // }
+
+    }
+
+    private static int Answer()
+    {
+      string UncheckedChoice = Console.ReadLine();
+      if (Int32.TryParse(UncheckedChoice, out int Choice))
+      {
+        return Choice;
+      }
+      else
+      {
+        Console.WriteLine($"You did not input a valid choice. Please input only a single digit to select a choice.");
+        Choice = Answer();
+      }
+      return Choice;
+    }
+    private static int Answer(int lowerBound, int upperBound)
+    {
+      int choice = Answer();
+      if ((choice < lowerBound) || (choice > upperBound))
+      {
+        Console.WriteLine($"You did not input a valid choice. Please input only a digit in range of {lowerBound} to {upperBound}, inclusive.");
+        choice = Answer(lowerBound, upperBound);
+        return choice;
+      }
+      return choice;
+    }
+    private static void StartOrder()
+    {
+      Console.WriteLine(@"Are you a returning customer, or are you a new customer?
+1: Returning Customer
+2: New Customer
+0: Go Back");
+
+      switch (Answer(0, 2))
+      {
+        case 1:
+          {
+
+            break;
+          }
+        case 2:
+          {
+
+            break;
+          }
+        case 0:
+          {
+            Restart = true;
+            break;
+          }
+        default:
+          {
+            Console.WriteLine(@"You shouldn't be here.");
+            break;
+          }
+      }
     }
     private static void PrintStoreList()
     {
