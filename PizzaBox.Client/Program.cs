@@ -54,7 +54,13 @@ Would you like to make an order, check a store's order history, or check your ow
             }
           case 3:
             {
-
+              // Customer Cust = PizzaBoxContext.DataReadID<Customer>(1, _context.Customers);
+              // AStore Sto = PizzaBoxContext.DataReadID<AStore>(1, _context.Stores);
+              // Order Testing = new Order() { Store = Sto, Customer = Cust };
+              // Testing.AddPizza(new MeatPizza());
+              // PizzaBoxContext.Save<Order>(_context, Testing);
+              // Order Test2 = PizzaBoxContext.DataReadEager(4, _context.Orders);
+              // Console.WriteLine($"{Test2.Items[0].Price}");
               Restart = false;
               break;
             }
@@ -147,7 +153,7 @@ Would you like to make an order, check a store's order history, or check your ow
 
     private static void ReturningCustomer()
     {
-      Console.WriteLine("Please input your ID number!");
+      Console.WriteLine("Please input your CustomerID!");
       int choice = Answer();
       Customer Customer = PizzaBoxContext.DataReadID<Customer>(choice, _context.Customers);
       Console.WriteLine($"{Customer.Name}");

@@ -11,6 +11,7 @@ namespace PizzaBox.Domain.Abstracts
   {
     public string name { get; set; }
     public string address { get; set; }
+    public List<Order> Orders { get; set; }
     public AStore()
     {
       name = "Yet to be Named";

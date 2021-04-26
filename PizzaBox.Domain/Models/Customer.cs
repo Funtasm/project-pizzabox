@@ -6,7 +6,7 @@ namespace PizzaBox.Domain.Models
   public class Customer : AModel
   {
     public string Name { get; set; }
-    // public List<Order> Orders { get; set; }
+    public List<Order> Orders { get; set; }
 
 
     public Customer()
@@ -17,6 +17,10 @@ namespace PizzaBox.Domain.Models
     public Customer(string n)
     {
       Name = n;
+    }
+    public override string ToString()
+    {
+      return Name;
     }
   }
 }

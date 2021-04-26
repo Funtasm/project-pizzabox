@@ -39,6 +39,7 @@ namespace PizzaBox.Domain.Models
       AddCrust();
       AddSize();
       AddToppings();
+      GetPrice();
     }
   }
 }

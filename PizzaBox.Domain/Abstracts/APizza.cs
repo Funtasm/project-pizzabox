@@ -22,7 +22,6 @@ namespace PizzaBox.Domain.Abstracts
 
     public List<PizzaComponent> Toppings = new List<PizzaComponent>();
     public decimal Price { get; set; }
-    public long OrderID { get; set; }
 
 
     /// <summary>
@@ -43,7 +42,7 @@ namespace PizzaBox.Domain.Abstracts
     public void GetPrice()
     {
       decimal Total;
-      Total = this.Crust.Price + this.Size.Price;
+      Total = Crust.Price + Size.Price;
       for (int i = 0; i < Toppings.Count; i++)
       {
         Total = Total + Toppings[i].Price;

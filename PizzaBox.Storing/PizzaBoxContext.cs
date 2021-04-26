@@ -34,6 +34,16 @@ namespace PizzaBox.Storing
       //https://stackoverflow.com/questions/23675187/linq-query-using-generics was a very helpful resource for figuring this out
       return Table.Where(x => x.EntityID == ID).FirstOrDefault() as T;
     }
+    public static Order DataReadEager(long ID, DbSet<Order> Table)
+    {
+
+      return Table
+      .Where(x => x.EntityID == ID)
+      .Include(b => b.Customer)
+      .Include(b => b.Store)
+      .Include(b => b.Items)
+      .FirstOrDefault();
+    }
     public static void Save<T>(PizzaBoxContext context, T ThingToSave) where T : class
     {
       context.Add(ThingToSave);
@@ -45,8 +55,6 @@ namespace PizzaBox.Storing
       {
         //key block
         builder.Entity<Order>()
-        .HasKey(e => e.EntityID);
-        builder.Entity<PizzaComponent>()
         .HasKey(e => e.EntityID);
         builder.Entity<AStore>()
         .HasKey(e => e.EntityID);
@@ -62,41 +70,42 @@ namespace PizzaBox.Storing
       {//relationship block
         builder.Entity<MeatPizza>()
         .HasBaseType<APizza>();
-        builder.Entity<Order>()
-        .HasOne<Customer>()
-        .WithMany()
-        .HasForeignKey(b => b.CustomerID);
-        builder.Entity<APizza>()
-        .HasOne<Order>()
-        .WithMany(b => b.Items)
-        .HasForeignKey(b => b.OrderID);
-        builder.Entity<Order>()
-        .HasOne<AStore>()
-        .WithMany()
-        .HasForeignKey(b => b.StoreID);
+        // builder.Entity<Order>()
+        // .HasOne<Customer>()
+        // .WithMany()
+        // .HasForeignKey("CustomerEntityID")
+        // ;
+        // builder.Entity<APizza>()
+        // .HasOne<Order>()
+        // .WithMany(b => b.Items)
+        // .HasForeignKey(b => b.OrderID);
+        // builder.Entity<Order>()
+        // .HasOne<AStore>()
+        // .WithMany()
+        // .HasForeignKey(b => b.StoreID);
       }
-      // OnDataSeeding(builder);
+      OnDataSeeding(builder);
 
 
     }//how to save/retrieve them
-     //     private void OnDataSeeding(ModelBuilder builder)
-     //     {
-     //       builder.Entity<MeatPizza>().HasData(new MeatPizza[]
-     //      {
-     //             new MeatPizza() {OrderID=1}
-     //      });
-     //       builder.Entity<Customer>().HasData(new Customer[]
-     //       {
-     //         new Customer("Johnny Test")
-     //       });
-     //       builder.Entity<NewYorkStore>().HasData(new NewYorkStore[]
-     // {
-     //         new NewYorkStore()
-     // });
-     //       builder.Entity<Order>().HasData(new Order[]
-     //       {
-     //         new Order() {StoreID =1, CustomerID=1}
-     //       });
-     //     }
+    private void OnDataSeeding(ModelBuilder builder)
+    {
+      builder.Entity<MeatPizza>().HasData(new MeatPizza[]
+     {
+                 new MeatPizza() {EntityID=1, Price=5.00m}
+     });
+      builder.Entity<Customer>().HasData(new Customer[]
+      {
+             new Customer("Johnny Test"){EntityID=1}
+      });
+      builder.Entity<NewYorkStore>().HasData(new NewYorkStore[]
+{
+             new NewYorkStore(){EntityID =1}
+});
+      builder.Entity<Order>().HasData(new Order[]
+      {
+             new Order() {EntityID=1}
+      });
+    }
   }
 }
