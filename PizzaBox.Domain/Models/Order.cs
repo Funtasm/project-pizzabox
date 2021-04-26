@@ -19,11 +19,15 @@ namespace PizzaBox.Domain.Models
       OrderTotal = OrderTotal + Pizza.Price;
       Pizza.OrderID = EntityID;
     }
+    public Order()
+    {
+
+    }
     public Order(long tStoreID, long tCustomerID)
     {
       StoreID = tStoreID;
       CustomerID = tCustomerID;
-      Items= new List<APizza>();
+      Items = new List<APizza>();
     }
 
 

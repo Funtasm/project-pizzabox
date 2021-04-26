@@ -14,9 +14,10 @@ namespace PizzaBox.Client
   public class Program
   {
     private static bool Restart = true;
+    private static readonly PizzaBoxContext _context = new PizzaBoxContext();
 
     private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
-    private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
+    // private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
 
     private static FileRepository _fr = new FileRepository();
     static void Main()
@@ -115,12 +116,12 @@ Would you like to make an order, check a store's order history, or check your ow
       {
         case 1:
           {
-
+            ReturningCustomer();
             break;
           }
         case 2:
           {
-
+            NewCustomer();
             break;
           }
         case 0:
@@ -134,6 +135,22 @@ Would you like to make an order, check a store's order history, or check your ow
             break;
           }
       }
+    }
+    private static void NewCustomer()
+    {
+      Console.WriteLine("Please input your name, or what you would like to be called by!");
+      Customer nCust = new Customer(Console.ReadLine());
+      PizzaBoxContext.Save<Customer>(_context, nCust);
+
+
+    }
+
+    private static void ReturningCustomer()
+    {
+      Console.WriteLine("Please input your ID number!");
+      int choice = Answer();
+      Customer Customer = PizzaBoxContext.DataReadID<Customer>(choice, _context.Customers);
+      Console.WriteLine($"{Customer.Name}");
     }
     private static void PrintStoreList()
     {

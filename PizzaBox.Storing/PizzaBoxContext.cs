@@ -4,6 +4,7 @@ using PizzaBox.Domain.Models;
 using Microsoft.EntityFrameworkCore.Design;
 using PizzaBox.Domain.Abstracts;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PizzaBox.Storing
 {
@@ -28,9 +29,21 @@ namespace PizzaBox.Storing
     {
       builder.UseSqlServer(_configuration["mssql"]);
     }//where to save
+    public static T DataReadID<T>(long ID, DbSet<T> Table) where T : AModel
+    {
+      //https://stackoverflow.com/questions/23675187/linq-query-using-generics was a very helpful resource for figuring this out
+      return Table.Where(x => x.EntityID == ID).FirstOrDefault() as T;
+    }
+    public static void Save<T>(PizzaBoxContext context, T ThingToSave) where T : class
+    {
+      context.Add(ThingToSave);
+      context.SaveChanges();
+    }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
-      { //key block
+      {
+        //key block
         builder.Entity<Order>()
         .HasKey(e => e.EntityID);
         builder.Entity<PizzaComponent>()
