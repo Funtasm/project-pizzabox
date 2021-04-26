@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -87,6 +88,31 @@ namespace PizzaBox.Domain.Abstracts
       var xml = new XmlSerializer(typeof(List<PizzaComponent>));
       return xml.Deserialize(reader) as List<PizzaComponent>;
     }
+    protected static void DisplayXMLMenu(List<PizzaComponent> MenuList)
+    {
+      {
+        var index = 0;
+
+        foreach (var item in MenuList)
+        {
+          ++index;
+          Console.Write("\n" + index);
+          Console.Write($" - {item.ToString()}");
+        }
+
+        Console.Write("\n");
+      }
+    }
+    public virtual string ToString()
+    {
+      return "A Pizza";
+    }
+    public virtual string ToStringName()
+    {
+      return "A Pizza";
+    }
+
+
     // public override string ToString()
     // {
     //   var stringBuilder = new StringBuilder();

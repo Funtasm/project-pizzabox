@@ -56,6 +56,24 @@ namespace PizzaBox.Storing
       context.Add(ThingToSave);
       context.SaveChanges();
     }
+    public static List<Order> StoreHistory(PizzaBoxContext context, int StoreID)
+    {
+      return context.Orders
+      .Where(a => a.Store.EntityID == StoreID)
+      .Include(b => b.Customer)
+      .Include(b => b.Store)
+      .ToList();
+
+    }
+    public static List<Order> CustomerHistory(PizzaBoxContext context, int CustID)
+    {
+      return context.Orders
+      .Where(a => a.Customer.EntityID == CustID)
+      .Include(b => b.Items)
+      .Include(b => b.Store)
+      .ToList();
+
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -77,6 +95,8 @@ namespace PizzaBox.Storing
       {//relationship block
         builder.Entity<MeatPizza>()
         .HasBaseType<APizza>();
+        builder.Entity<CYOPizza>()
+        .HasBaseType<APizza>();
         // builder.Entity<Order>()
         // .HasOne<Customer>()
         // .WithMany()
@@ -91,7 +111,7 @@ namespace PizzaBox.Storing
         // .WithMany()
         // .HasForeignKey(b => b.StoreID);
       }
-      OnDataSeeding(builder);
+      // OnDataSeeding(builder);
 
 
     }//how to save/retrieve them

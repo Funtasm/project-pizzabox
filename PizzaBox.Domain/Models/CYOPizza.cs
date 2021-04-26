@@ -10,12 +10,16 @@ namespace PizzaBox.Domain.Models
 
   public class CYOPizza : APizza
   {
-    public CYOPizza()
+    public CYOPizza(int x)
     {
       AddCrust();
       AddSize();
       AddToppings();
       GetPrice();
+    }
+    public CYOPizza()
+    {
+
     }
 
     protected override void AddCrust()
@@ -37,29 +41,22 @@ namespace PizzaBox.Domain.Models
       Console.WriteLine("What Toppings would you like on your pizza? Pick up to three, and choose 0 to skip!");
       while (MaxToppings > 0)
       {
-        Toppings.Add(Common.SwitchChoice(0, 8, AllToppings));
-        MaxToppings--;
-      }
-    }
-    private static void DisplayXMLMenu(List<PizzaComponent> MenuList)
-    {
-      {
-        var index = 0;
-
-        foreach (var item in MenuList)
+        PizzaComponent Temp = Common.SwitchChoice(0, 8, AllToppings);
+        if (Temp is null) ;
+        else
         {
-          ++index;
-          Console.Write("\n" + index);
-          Console.Write($" - {item.ToString()}");
+          Toppings.Add(Temp);
         }
-
-        Console.Write("\n");
+        MaxToppings--;
       }
     }
     public override string ToString()
     {
-      return $"{Size} Create Your Own Pizza";
+      return $"{Size.Name} MeatPizza";
     }
-
+    public override string ToStringName()
+    {
+      return "Create Your Own Pizza";
+    }
   }
 }

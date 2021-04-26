@@ -21,6 +21,9 @@ namespace PizzaBox.Domain.Models
 
     }
 
-
+    public override string ToString()
+    {
+      return $"OrderID:{EntityID} - Store:{Store.name} - Customer:{Customer.Name} - Total:{OrderTotal}";
+    }
   }
 }

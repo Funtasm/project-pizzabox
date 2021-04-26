@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PizzaBox.Domain.Abstracts;
 using System;
+using PizzaBox.Methods;
 //using PizzaBox.Storing.Repositories;
 
 namespace PizzaBox.Domain.Models
@@ -16,7 +17,9 @@ namespace PizzaBox.Domain.Models
     /// </summary>
     protected override void AddCrust()
     {
-      Crust = AllCrusts[0];
+      CYOPizza.DisplayXMLMenu(AllCrusts);
+      Console.WriteLine("What kind of Crust would you like?");
+      Crust = Common.SwitchChoice(1, 3, AllCrusts);
     }
 
     /// <summary>
@@ -24,7 +27,9 @@ namespace PizzaBox.Domain.Models
     /// </summary>
     protected override void AddSize()
     {
-      Size = AllSizes[0];
+      CYOPizza.DisplayXMLMenu(AllSizes);
+      Console.WriteLine("What size would you like?");
+      Size = Common.SwitchChoice(1, 3, AllSizes);
     }
 
     /// <summary>
@@ -34,16 +39,24 @@ namespace PizzaBox.Domain.Models
     {
       Toppings = AllToppings.GetRange(0, 3);
     }
-    public MeatPizza()
+    public MeatPizza(int x)
     {
       AddCrust();
       AddSize();
       AddToppings();
       GetPrice();
     }
+    public MeatPizza()
+    {
+
+    }
     public override string ToString()
     {
-      return $"{Size} MeatPizza";
+      return $"{Size.Name} MeatPizza";
+    }
+    public override string ToStringName()
+    {
+      return "MeatPizza";
     }
   }
 }

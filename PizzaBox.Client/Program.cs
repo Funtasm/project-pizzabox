@@ -47,19 +47,13 @@ Would you like to make an order, check a store's order history, or check your ow
             }
           case 2:
             {
-
+              StoreHistory();
               Restart = false;
               break;
             }
           case 3:
             {
-              // Customer Cust = PizzaBoxContext.DataReadID<Customer>(1, _context.Customers);
-              // AStore Sto = PizzaBoxContext.DataReadID<AStore>(1, _context.Stores);
-              // Order Testing = new Order() { Store = Sto, Customer = Cust };
-              // Testing.AddPizza(new MeatPizza());
-              // PizzaBoxContext.Save<Order>(_context, Testing);
-              // Order Test2 = PizzaBoxContext.DataReadEager(4, _context.Orders);
-              // Console.WriteLine($"{Test2.Items[0].Price}");
+              CustomerHistory();
               Restart = false;
               break;
             }
@@ -128,19 +122,19 @@ Would you like to make an order, check a store's order history, or check your ow
       {
         case 1:
           {
-            MyOrder.Store = _storeSingleton.Stores[0];
+            MyOrder.Store = PizzaBoxContext.DataReadID(1, _context.Stores);
 
             break;
           }
         case 2:
           {
-            MyOrder.Store = _storeSingleton.Stores[1];
+            MyOrder.Store = PizzaBoxContext.DataReadID(2, _context.Stores);
 
             break;
           }
         case 3:
           {
-            MyOrder.Store = _storeSingleton.Stores[2];
+            MyOrder.Store = PizzaBoxContext.DataReadID(3, _context.Stores);
 
             break;
           }
@@ -181,13 +175,13 @@ Would you like to make an order, check a store's order history, or check your ow
       {
         case 1:
           {
-            MeatPizza Pizza = new MeatPizza();
+            MeatPizza Pizza = new MeatPizza(1);
             return Pizza;
             break;
           }
         case 2:
           {
-            CYOPizza Pizza = new CYOPizza();
+            CYOPizza Pizza = new CYOPizza(1);
             return Pizza;
             break;
           }
@@ -229,14 +223,99 @@ Would you like to make an order, check a store's order history, or check your ow
       }//end while loop
 
     }
+    private static void StoreHistory()
+    {
+      Console.WriteLine("Which store history would you like to check?");
+      PrintStoreList();
+      List<Order> Read;
+      switch (Common.Answer(1, 3))
+      {
+        case 1:
+          {
+            Read = PizzaBoxContext.StoreHistory(_context, 1);
+            foreach (var item in Read)
+              Console.WriteLine(item.ToString());
+            break;
+          }
+        case 2:
+          {
+            Read = PizzaBoxContext.StoreHistory(_context, 2);
+            foreach (var item in Read)
+              Console.WriteLine(item.ToString());
+            break;
+          }
+        case 3:
+          {
+            Read = PizzaBoxContext.StoreHistory(_context, 2);
+            foreach (var item in Read)
+              Console.WriteLine(item.ToString());
+            break;
+          }
+      }
 
+    }
+    private static void CustomerHistory()
+    {
+      bool localrestart = false;
+      Console.WriteLine("Whose order history would you like to check?");
+      int choice = Common.Answer();
+      do
+      {
+        List<Order> History = PizzaBoxContext.CustomerHistory(_context, choice);
+        if (History is null)
+        {
+          Console.WriteLine("We couldnt find a customer with that ID! :( Try another, or enter 0 to return!");
+          choice = Common.Answer();
+          if (choice == 0)
+          {
+            localrestart = false;
+            DoTheThing();
+          }
+          else
+          {
+            localrestart = true;
+          }
+        }
+        else
+        {
+          foreach (var item in History)
+          {
+            Console.WriteLine($"Order ID:{item.EntityID} - {item.Store.name} - {item.OrderTotal} containing:");
+            for (int i = 0; i < item.Items.Count; i++)
+              Console.WriteLine($"{item.Items[i].ToStringName()}");
+          }
+        }
+      } while (localrestart);
+    }
     private static void ReturningCustomer()
     {
+      bool localrestart = false;
       Console.WriteLine("Please input your CustomerID!");
       int choice = Common.Answer();
-      Customer Customer = PizzaBoxContext.DataReadID<Customer>(choice, _context.Customers);
-      Console.WriteLine($"{Customer.Name}, welcome back!");
-      OrderCreation(Customer);
+      do
+      {
+        Customer Customer = PizzaBoxContext.DataReadID<Customer>(choice, _context.Customers);
+        if (Customer is null)
+        {
+          Console.WriteLine("We couldnt find a customer with that ID! :( Try another, or enter 0 to return!");
+          choice = Common.Answer();
+          if (choice == 0)
+          {
+            localrestart = false;
+            StartOrder();
+          }
+          else
+          {
+            localrestart = true;
+          }
+        }
+        else
+        {
+          Console.WriteLine($"{Customer.Name}, welcome back!");
+          OrderCreation(Customer);
+        }
+      } while (localrestart);
+
     }
     private static void PrintStoreList()
     {
