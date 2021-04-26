@@ -10,6 +10,6 @@
   </AStore>
   <AStore xsi:type="NewYorkStore">
     <name>DownTownNewYorkStore</name>
-    <address>Coming Soon!</address>
+    <address>1741 Baker St.</address>
   </AStore>
 </ArrayOfAStore>

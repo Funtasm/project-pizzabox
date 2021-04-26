@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System;
-using sc = System.Console;
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
 using PizzaBox.Client.Singletons;
 using PizzaBox.Storing.Repositories;
 using System.Reflection;
 using PizzaBox.Storing;
-
+using PizzaBox.Methods;
 
 namespace PizzaBox.Client
 {
@@ -38,7 +37,7 @@ Would you like to make an order, check a store's order history, or check your ow
 0: Quit.
       ");
 
-        switch (Answer(0, 3))
+        switch (Common.Answer(0, 3))
         {
           case 1:
             {
@@ -86,31 +85,7 @@ Would you like to make an order, check a store's order history, or check your ow
 
     }
 
-    private static int Answer()
-    {
-      string UncheckedChoice = Console.ReadLine();
-      if (Int32.TryParse(UncheckedChoice, out int Choice))
-      {
-        return Choice;
-      }
-      else
-      {
-        Console.WriteLine($"You did not input a valid choice. Please input only a single digit to select a choice.");
-        Choice = Answer();
-      }
-      return Choice;
-    }
-    private static int Answer(int lowerBound, int upperBound)
-    {
-      int choice = Answer();
-      if ((choice < lowerBound) || (choice > upperBound))
-      {
-        Console.WriteLine($"You did not input a valid choice. Please input only a digit in range of {lowerBound} to {upperBound}, inclusive.");
-        choice = Answer(lowerBound, upperBound);
-        return choice;
-      }
-      return choice;
-    }
+
     private static void StartOrder()
     {
       Console.WriteLine(@"Are you a returning customer, or are you a new customer?
@@ -118,7 +93,7 @@ Would you like to make an order, check a store's order history, or check your ow
 2: New Customer
 0: Go Back");
 
-      switch (Answer(0, 2))
+      switch (Common.Answer(0, 2))
       {
         case 1:
           {
@@ -142,21 +117,126 @@ Would you like to make an order, check a store's order history, or check your ow
           }
       }
     }
+    private static void OrderCreation(Customer Customer)
+    {
+      Order MyOrder = new Order();
+      MyOrder.Customer = Customer;
+      bool localrestart = false;
+      Console.WriteLine("Which store will you be purchasing from?");
+      PrintStoreList();
+      switch (Common.Answer(1, 3))
+      {
+        case 1:
+          {
+            MyOrder.Store = _storeSingleton.Stores[0];
+
+            break;
+          }
+        case 2:
+          {
+            MyOrder.Store = _storeSingleton.Stores[1];
+
+            break;
+          }
+        case 3:
+          {
+            MyOrder.Store = _storeSingleton.Stores[2];
+
+            break;
+          }
+
+      }
+      do
+      {
+        MyOrder.AddPizza(PizzaCreator());
+        Console.WriteLine(@"Would you like to add another pizza?
+1: Yes
+2: No
+");
+        if (Common.Answer(1, 2) == 1)
+          localrestart = true;
+        else
+          localrestart = false;
+      } while (localrestart);
+      ConfirmOrder(MyOrder);
+
+    }
+    private static void ConfirmOrder(Order MyOrder)
+    {
+      Console.WriteLine($"Your order for {MyOrder.Customer.Name} at the {MyOrder.Store.name} contains:");
+      for (int i = 0; i < MyOrder.Items.Count; i++)
+      {
+        Console.WriteLine($"{i + 1}: {MyOrder.Items[i].ToString()} - {MyOrder.Items[i].Price}");
+      }
+      Console.WriteLine($"For a total of: {MyOrder.OrderTotal}");
+      PizzaBoxContext.Save(_context, MyOrder);
+    }
+    private static APizza PizzaCreator()
+    {
+      Console.WriteLine(@"Would you like a MeatPizza, or to create your own Pizza?
+1: MeatPizza
+2: Create my own!
+");
+      switch (Common.Answer(1, 2))
+      {
+        case 1:
+          {
+            MeatPizza Pizza = new MeatPizza();
+            return Pizza;
+            break;
+          }
+        case 2:
+          {
+            CYOPizza Pizza = new CYOPizza();
+            return Pizza;
+            break;
+          }
+
+      }
+      //this shouldnt ever be reached.
+      return null;
+    }
     private static void NewCustomer()
     {
-      Console.WriteLine("Please input your name, or what you would like to be called by!");
-      Customer nCust = new Customer(Console.ReadLine());
-      PizzaBoxContext.Save<Customer>(_context, nCust);
+      bool localrestart = true;
+      while (localrestart)
+      {
+        Console.WriteLine("Please input your name, or what you would like to be called by!");
+        Customer nCust = new Customer(Console.ReadLine());
+        Console.WriteLine($"You put {nCust.Name}, is that right? 1 to continue, or 2 to re-assign your name.");
+        switch (Common.Answer(1, 2))
+        {
+          case 1:
+            {
+              PizzaBoxContext.Save<Customer>(_context, nCust);
+              nCust = PizzaBoxContext.CustomerReadString(nCust.Name, _context.Customers);
+              localrestart = false;
+              Console.WriteLine($"Your name, {nCust.Name}, has been saved! Your ID is: {nCust.EntityID}");
+              OrderCreation(nCust);
+              break;
+            }
+          case 2:
+            {
 
+              break;
+            }
+          default:
+            {
+              Console.WriteLine("You shouldn't be here, again.");
+              break;
+            }
+        }
+      }//end while loop
 
     }
 
     private static void ReturningCustomer()
     {
       Console.WriteLine("Please input your CustomerID!");
-      int choice = Answer();
+      int choice = Common.Answer();
       Customer Customer = PizzaBoxContext.DataReadID<Customer>(choice, _context.Customers);
-      Console.WriteLine($"{Customer.Name}");
+      Console.WriteLine($"{Customer.Name}, welcome back!");
+      OrderCreation(Customer);
     }
     private static void PrintStoreList()
     {
@@ -165,14 +245,15 @@ Would you like to make an order, check a store's order history, or check your ow
       foreach (var item in _storeSingleton.Stores)
       {
         ++index;
+        Console.Write("\n" + index);
         //solution for iteration of properties in objects found by "https://stackoverflow.com/questions/36656177/loop-through-an-objects-properties-and-get-the-values-for-those-of-type-datetim/36656271"
         foreach (PropertyInfo prop in item.GetType().GetProperties())
         {
-
-          Console.WriteLine($"{index} - {prop.Name} - {prop.GetValue(item)}");
+          if (prop.PropertyType == typeof(string))
+            Console.Write($" - {prop.GetValue(item)}");
         }
       }
-
+      Console.Write("\n");
     }
   }
 }

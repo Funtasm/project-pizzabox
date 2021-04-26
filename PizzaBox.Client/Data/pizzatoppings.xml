@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfPizzaComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PizzaComponent>
-    <Name>Mozzerella</Name>
+    <Name>Mozzerella Cheese</Name>
     <Price>1.00</Price>
   </PizzaComponent>
   <PizzaComponent>
@@ -12,4 +12,24 @@
     <Name>Sausage</Name>
     <Price>2.00</Price>
   </PizzaComponent>
+  <PizzaComponent>
+    <Name>Ham</Name>
+    <Price>2.00</Price>
+  </PizzaComponent>
+  <PizzaComponent>
+    <Name>Pineapple</Name>
+    <Price>1.00</Price>
+  </PizzaComponent>
+  <PizzaComponent>
+    <Name>Red Onions</Name>
+    <Price>1.00</Price>
+  </PizzaComponent>
+  <PizzaComponent>
+    <Name>Diced Tomatoes</Name>
+    <Price>1.00</Price>
+  </PizzaComponent>
+  <PizzaComponent>
+    <Name>Cheddar Cheese</Name>
+    <Price>1.50</Price>
+  </PizzaComponent>    
 </ArrayOfPizzaComponent>

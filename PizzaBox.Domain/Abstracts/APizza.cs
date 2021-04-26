@@ -11,9 +11,9 @@ namespace PizzaBox.Domain.Abstracts
 
   public abstract class APizza : AModel
   {
-    private string _SizePath = @"Data/pizzasize.xml";
-    private string _CrustPath = @"Data/pizzacrust.xml";
-    private string _ToppingsPath = @"Data/pizzatoppings.xml";
+    protected string _SizePath = @"Data/pizzasize.xml";
+    protected string _CrustPath = @"Data/pizzacrust.xml";
+    protected string _ToppingsPath = @"Data/pizzatoppings.xml";
     protected static List<PizzaComponent> AllCrusts { get; private set; }
     protected static List<PizzaComponent> AllSizes { get; private set; }
     protected static List<PizzaComponent> AllToppings { get; private set; }
@@ -77,26 +77,11 @@ namespace PizzaBox.Domain.Abstracts
       AllSizes = MenuReader(_SizePath);
       AllToppings = MenuReader(_ToppingsPath);
     }
-    // private void CreateMenu()
-    // {
-    // PizzaComponent Crust1 = PizzaComponent.MakeComponent("Thin", 0.00m);
-    // PizzaComponent Size1 = PizzaComponent.MakeComponent("Small", 1.00m);
-    // PizzaComponent Topping1 = PizzaComponent.MakeComponent("Mozzerella", 1.00m);
-    // AllCrusts.Add(Crust1);
-    // AllSizes.Add(Size1);
-    // AllToppings.Add(Topping1);
-    // FileRepository.WriteToFile(_CrustPath, AllCrusts);
-    // FileRepository.WriteToFile(_SizePath, AllSizes);
-    // FileRepository.WriteToFile(_ToppingsPath, AllToppings);
-
-    // }
-    //above requires a circular dependency, must create a private write to file in APizza to continue.
-
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    private List<PizzaComponent> MenuReader(string path)
+    public List<PizzaComponent> MenuReader(string path)
     {
       var reader = new StreamReader(path);
       var xml = new XmlSerializer(typeof(List<PizzaComponent>));

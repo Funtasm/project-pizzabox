@@ -20,5 +20,9 @@ namespace PizzaBox.Domain.Models
       abc.Name = x;
       return abc;
     }
+    public override string ToString()
+    {
+      return $"{Name} - ${Price}";
+    }
   }
 }

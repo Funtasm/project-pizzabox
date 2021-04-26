@@ -41,5 +41,9 @@ namespace PizzaBox.Domain.Models
       AddToppings();
       GetPrice();
     }
+    public override string ToString()
+    {
+      return $"{Size} MeatPizza";
+    }
   }
 }

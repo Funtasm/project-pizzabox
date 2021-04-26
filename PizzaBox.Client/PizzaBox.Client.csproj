@@ -4,6 +4,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PizzaBox.Domain\PizzaBox.Domain.csproj" />
     <ProjectReference Include="..\PizzaBox.Storing\PizzaBox.Storing.csproj" />
+    <ProjectReference Include="..\PizzaBox.Methods\PizzaBox.Methods.csproj" />
   </ItemGroup>
 
 

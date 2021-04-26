@@ -34,6 +34,13 @@ namespace PizzaBox.Storing
       //https://stackoverflow.com/questions/23675187/linq-query-using-generics was a very helpful resource for figuring this out
       return Table.Where(x => x.EntityID == ID).FirstOrDefault() as T;
     }
+    public static Customer CustomerReadString(string Search, DbSet<Customer> context)
+    {
+      return context
+      .Where(x => x.Name == Search)
+      .FirstOrDefault();
+    }
+
     public static Order DataReadEager(long ID, DbSet<Order> Table)
     {
 
