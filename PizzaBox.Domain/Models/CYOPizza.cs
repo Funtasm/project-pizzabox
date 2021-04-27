@@ -41,8 +41,9 @@ namespace PizzaBox.Domain.Models
       Console.WriteLine("What Toppings would you like on your pizza? Pick up to three, and choose 0 to skip!");
       while (MaxToppings > 0)
       {
-        PizzaComponent Temp = Common.SwitchChoice(0, 8, AllToppings);
-        if (Temp is null) ;
+        Toppings Temp = Common.SwitchChoice(0, 8, AllToppings);
+        if (Temp is null)
+        { }
         else
         {
           Toppings.Add(Temp);
@@ -52,7 +53,7 @@ namespace PizzaBox.Domain.Models
     }
     public override string ToString()
     {
-      return $"{Size.Name} MeatPizza";
+      return $"{Size.Name} CYO Pizza";
     }
     public override string ToStringName()
     {

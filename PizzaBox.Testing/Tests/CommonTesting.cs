@@ -18,7 +18,7 @@ namespace PizzaBox.Testing.Tests
       //cannot find file so it fails
       //arrange (sut = subject under test)
       var sut = new MeatPizza();
-      List<PizzaComponent> act = sut.MenuReader("/home/seth/revature/project_pizzabox/PizzaBox.Client/Data/pizzacrust.xml");
+      List<PizzaComponent> act = sut.MenuReader<PizzaComponent>("/home/seth/revature/project_pizzabox/PizzaBox.Client/Data/pizzacrust.xml");
       //act 
       // assert
       Assert.True(act[0].Name == "Thin");
@@ -63,6 +63,27 @@ namespace PizzaBox.Testing.Tests
     {
       var Store = new NewYorkStore();
       Assert.True(Store.ToString() == Store.name);
+    }
+    [Fact]
+    public void PizzaComponentInheritance_Test1()
+    {
+      var Component = new PizzaComponent();
+      Assert.True(Component.EntityID == 0);
+
+    }
+    [Fact]
+    public void OrderEmptyTest()
+    {
+      var sut = new Order() { Customer = new Customer() };
+      Assert.True(sut.Customer.Name == "Default");
+
+    }
+    [Fact]
+    public void CYOPizza_Test()
+    {
+      var sut = new CYOPizza();
+      Assert.True(sut is null);
+      // this fails because it tries to reach the xml as well
     }
   }
 }

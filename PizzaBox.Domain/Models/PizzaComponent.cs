@@ -3,7 +3,7 @@ using PizzaBox.Domain.Abstracts;
 
 namespace PizzaBox.Domain.Models
 {
-  public class PizzaComponent
+  public class PizzaComponent : AModel
   {
     public string Name { get; set; }
 

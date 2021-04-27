@@ -76,7 +76,6 @@ Would you like to make an order, check a store's order history, or check your ow
       //   context.Orders.Add(Test);
       //   context.SaveChanges();
       // }
-
     }
 
 
@@ -228,31 +227,9 @@ Would you like to make an order, check a store's order history, or check your ow
       Console.WriteLine("Which store history would you like to check?");
       PrintStoreList();
       List<Order> Read;
-      switch (Common.Answer(1, 3))
-      {
-        case 1:
-          {
-            Read = PizzaBoxContext.StoreHistory(_context, 1);
-            foreach (var item in Read)
-              Console.WriteLine(item.ToString());
-            break;
-          }
-        case 2:
-          {
-            Read = PizzaBoxContext.StoreHistory(_context, 2);
-            foreach (var item in Read)
-              Console.WriteLine(item.ToString());
-            break;
-          }
-        case 3:
-          {
-            Read = PizzaBoxContext.StoreHistory(_context, 2);
-            foreach (var item in Read)
-              Console.WriteLine(item.ToString());
-            break;
-          }
-      }
-
+      Read = PizzaBoxContext.StoreHistory(_context, (Common.Answer(1, 3)));
+      foreach (var item in Read)
+        Console.WriteLine(item.ToString());
     }
     private static void CustomerHistory()
     {
@@ -282,7 +259,7 @@ Would you like to make an order, check a store's order history, or check your ow
           {
             Console.WriteLine($"Order ID:{item.EntityID} - {item.Store.name} - {item.OrderTotal} containing:");
             for (int i = 0; i < item.Items.Count; i++)
-              Console.WriteLine($"{item.Items[i].ToStringName()}");
+              Console.WriteLine($"{item.Items[i].ToStringName()} {item.Items[i].ToStringALL()}");
           }
         }
       } while (localrestart);

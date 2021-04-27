@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfPizzaComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <PizzaComponent>
+<ArrayOfToppings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Toppings>
     <Name>Mozzerella Cheese</Name>
     <Price>1.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Pepperoni</Name>
     <Price>1.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Sausage</Name>
     <Price>2.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Ham</Name>
     <Price>2.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Pineapple</Name>
     <Price>1.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Red Onions</Name>
     <Price>1.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Diced Tomatoes</Name>
     <Price>1.00</Price>
-  </PizzaComponent>
-  <PizzaComponent>
+  </Toppings>
+  <Toppings>
     <Name>Cheddar Cheese</Name>
     <Price>1.50</Price>
-  </PizzaComponent>    
-</ArrayOfPizzaComponent>
+  </Toppings>    
+</ArrayOfToppings>

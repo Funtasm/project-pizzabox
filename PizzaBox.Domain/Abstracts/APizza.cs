@@ -15,13 +15,13 @@ namespace PizzaBox.Domain.Abstracts
     protected string _SizePath = @"Data/pizzasize.xml";
     protected string _CrustPath = @"Data/pizzacrust.xml";
     protected string _ToppingsPath = @"Data/pizzatoppings.xml";
-    protected static List<PizzaComponent> AllCrusts { get; private set; }
-    protected static List<PizzaComponent> AllSizes { get; private set; }
-    protected static List<PizzaComponent> AllToppings { get; private set; }
-    public PizzaComponent Crust;
-    public PizzaComponent Size;
+    protected static List<Crust> AllCrusts { get; private set; }
+    protected static List<Size> AllSizes { get; private set; }
+    protected static List<Toppings> AllToppings { get; private set; }
+    public Crust Crust { get; set; }
+    public Size Size { get; set; }
 
-    public List<PizzaComponent> Toppings = new List<PizzaComponent>();
+    public List<Toppings> Toppings { get; set; } = new List<Toppings>();
     public decimal Price { get; set; }
 
 
@@ -74,21 +74,21 @@ namespace PizzaBox.Domain.Abstracts
     protected abstract void AddToppings();
     private void ReadMenu()
     {
-      AllCrusts = MenuReader(_CrustPath);
-      AllSizes = MenuReader(_SizePath);
-      AllToppings = MenuReader(_ToppingsPath);
+      AllCrusts = MenuReader<Crust>(_CrustPath);
+      AllSizes = MenuReader<Size>(_SizePath);
+      AllToppings = MenuReader<Toppings>(_ToppingsPath);
     }
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public List<PizzaComponent> MenuReader(string path)
+    public List<T> MenuReader<T>(string path) where T : PizzaComponent
     {
       var reader = new StreamReader(path);
-      var xml = new XmlSerializer(typeof(List<PizzaComponent>));
-      return xml.Deserialize(reader) as List<PizzaComponent>;
+      var xml = new XmlSerializer(typeof(List<T>));
+      return xml.Deserialize(reader) as List<T>;
     }
-    protected static void DisplayXMLMenu(List<PizzaComponent> MenuList)
+    protected static void DisplayXMLMenu<T>(List<T> MenuList) where T : PizzaComponent
     {
       {
         var index = 0;
@@ -105,11 +105,23 @@ namespace PizzaBox.Domain.Abstracts
     }
     public virtual string ToString()
     {
-      return "A Pizza";
+      string Return1 = $"{Size.Name} - {Crust.Name} with:";
+      foreach (var item in Toppings)
+        Return1 += $" ({item.Name})";
+      return Return1;
     }
     public virtual string ToStringName()
     {
       return "A Pizza";
+    }
+    public string ToStringALL()
+    {
+      if (Size is null)
+        return "not all properties are not found!";
+      string Return1 = $"{Size.Name} - {Crust.Name} with:";
+      foreach (var item in Toppings)
+        Return1 += $" ({item.Name})";
+      return Return1;
     }
 
 

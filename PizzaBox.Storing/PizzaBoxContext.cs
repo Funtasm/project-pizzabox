@@ -16,7 +16,9 @@ namespace PizzaBox.Storing
     public DbSet<APizza> Pizzas { get; set; }
     public DbSet<AStore> Stores { get; set; }
     public DbSet<Order> Orders { get; set; } //implicit serialization
-
+    public DbSet<Crust> Crusts { get; set; }
+    public DbSet<Size> Sizes { get; set; }
+    public DbSet<Toppings> Toppings { get; set; }
 
     //above is order of what to save
 
@@ -70,6 +72,11 @@ namespace PizzaBox.Storing
       return context.Orders
       .Where(a => a.Customer.EntityID == CustID)
       .Include(b => b.Items)
+      .ThenInclude(b => b.Crust)
+      .Include(b => b.Items)
+      .ThenInclude(b => b.Size)
+      .Include(b => b.Items)
+      .ThenInclude(b => b.Toppings)
       .Include(b => b.Store)
       .ToList();
 
@@ -91,6 +98,12 @@ namespace PizzaBox.Storing
         .HasKey(e => e.EntityID);
         builder.Entity<APizza>()
         .HasKey(e => e.EntityID);
+        builder.Entity<Crust>()
+        .HasKey(e => e.EntityID);
+        builder.Entity<Size>()
+        .HasKey(e => e.EntityID);
+        builder.Entity<Toppings>()
+        .HasKey(e => e.EntityID);
       }
       {//relationship block
         builder.Entity<MeatPizza>()
@@ -111,7 +124,7 @@ namespace PizzaBox.Storing
         // .WithMany()
         // .HasForeignKey(b => b.StoreID);
       }
-      // OnDataSeeding(builder);
+      OnDataSeeding(builder);
 
 
     }//how to save/retrieve them
@@ -132,6 +145,29 @@ namespace PizzaBox.Storing
       builder.Entity<Order>().HasData(new Order[]
       {
              new Order() {EntityID=1}
+      });
+      builder.Entity<Crust>().HasData(new Crust[]
+      {
+        new Crust() {EntityID =1, Name= "Thin", Price = 0.00m},
+        new Crust() {EntityID =2, Name= "Original", Price = 0.00m},
+        new Crust() {EntityID =3, Name= "Stuffed Crust", Price = 2.00m}
+      });
+      builder.Entity<Size>().HasData(new Size[]
+      {
+        new Size() {EntityID =1, Name= "Small", Price = 4.50m},
+        new Size() {EntityID =2, Name= "Medium", Price = 7.00m},
+        new Size() {EntityID =3, Name= "Large", Price = 9.00m}
+      });
+      builder.Entity<Toppings>().HasData(new Toppings[]
+      {
+        new Toppings() {EntityID=1, Name ="Mozzerella Cheese", Price = 1.00m },
+        new Toppings() {EntityID=2, Name ="Pepperoni", Price = 1.00m },
+        new Toppings() {EntityID=3, Name ="Sausage", Price = 2.00m },
+        new Toppings() {EntityID=4, Name ="Ham", Price = 2.00m },
+        new Toppings() {EntityID=5, Name ="Pineapple", Price = 1.00m },
+        new Toppings() {EntityID=6, Name ="Red Onions", Price = 1.00m },
+        new Toppings() {EntityID=7, Name ="Diced Tomatoes", Price = 1.00m },
+        new Toppings() {EntityID=8, Name ="Cheddar Cheese", Price = 1.50m },
       });
     }
   }
