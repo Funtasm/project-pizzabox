@@ -63,7 +63,12 @@ namespace PizzaBox.Storing
       return context.Orders
       .Where(a => a.Store.EntityID == StoreID)
       .Include(b => b.Customer)
-      .Include(b => b.Store)
+      .Include(b => b.Items)
+      .ThenInclude(b => b.Crust)
+      .Include(b => b.Items)
+      .ThenInclude(b => b.Size)
+      .Include(b => b.Items)
+      .ThenInclude(b => b.Toppings)
       .ToList();
 
     }

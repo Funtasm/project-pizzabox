@@ -23,7 +23,12 @@ namespace PizzaBox.Domain.Models
 
     public override string ToString()
     {
-      return $"OrderID:{EntityID} - Store:{Store.name} - Customer:{Customer.Name} - Total:{OrderTotal}";
+      string toRead = $"OrderID:{EntityID} - Customer:{Customer.Name} - Total:{OrderTotal} \n{Items.Count} Items:\n ";
+      foreach (var item in Items)
+      {
+        toRead += item.ToStringName() + " " + item.ToStringALL() + "\n";
+      }
+      return toRead;
     }
   }
 }

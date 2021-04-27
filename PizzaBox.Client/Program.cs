@@ -229,7 +229,9 @@ Would you like to make an order, check a store's order history, or check your ow
       List<Order> Read;
       Read = PizzaBoxContext.StoreHistory(_context, (Common.Answer(1, 3)));
       foreach (var item in Read)
+      {
         Console.WriteLine(item.ToString());
+      }
     }
     private static void CustomerHistory()
     {
