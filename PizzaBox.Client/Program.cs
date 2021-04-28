@@ -257,9 +257,11 @@ Would you like to make an order, check a store's order history, or check your ow
         }
         else
         {
+          if (History[0].Customer.Name != null)
+            Console.WriteLine($"History for {History[0].Customer.Name}:");
           foreach (var item in History)
           {
-            Console.WriteLine($"Order ID:{item.EntityID} - {item.Store.name} - {item.OrderTotal} containing:");
+            Console.WriteLine($"\nOrder ID:{item.EntityID} - {item.Store.name} - {item.OrderTotal} containing:");
             for (int i = 0; i < item.Items.Count; i++)
               Console.WriteLine($"{item.Items[i].ToStringName()} {item.Items[i].ToStringALL()}");
           }

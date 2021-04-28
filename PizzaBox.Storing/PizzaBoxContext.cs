@@ -83,6 +83,7 @@ namespace PizzaBox.Storing
       .Include(b => b.Items)
       .ThenInclude(b => b.Toppings)
       .Include(b => b.Store)
+      .Include(b => b.Customer)
       .ToList();
 
     }

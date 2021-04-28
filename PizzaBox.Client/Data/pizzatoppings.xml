@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfToppings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Toppings>
+    <Name>Marinara Sauce</Name>
+    <Price>0.00</Price>
+  </Toppings>
+  <Toppings>
+    <Name>Pizza Cheese Blend</Name>
+    <Price>0.00</Price>
+  </Toppings>
+  <Toppings>
     <Name>Mozzerella Cheese</Name>
     <Price>1.00</Price>
   </Toppings>

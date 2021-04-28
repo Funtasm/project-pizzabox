@@ -38,10 +38,12 @@ namespace PizzaBox.Domain.Models
     {
       int MaxToppings = 3;
       CYOPizza.DisplayXMLMenu(AllToppings);
-      Console.WriteLine("What Toppings would you like on your pizza? Pick up to three, and choose 0 to skip!");
+      Console.WriteLine("What Toppings would you like on your pizza? Pick up to three, and choose 0 to skip!\nThe first two toppings come included in your pizza!");
+      Toppings.Add(AllToppings[0]);
+      Toppings.Add(AllToppings[1]);
       while (MaxToppings > 0)
       {
-        Toppings Temp = Common.SwitchChoice(0, 8, AllToppings);
+        Toppings Temp = Common.SwitchChoice(0, 10, AllToppings);
         if (Temp is null)
         { }
         else

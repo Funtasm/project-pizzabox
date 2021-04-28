@@ -37,7 +37,7 @@ namespace PizzaBox.Domain.Models
     /// </summary>
     protected override void AddToppings()
     {
-      Toppings = AllToppings.GetRange(0, 3);
+      Toppings = AllToppings.GetRange(0, 5);
     }
     public MeatPizza(int x)
     {

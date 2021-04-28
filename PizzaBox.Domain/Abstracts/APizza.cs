@@ -123,19 +123,5 @@ namespace PizzaBox.Domain.Abstracts
         Return1 += $" ({item.Name})";
       return Return1;
     }
-
-
-    // public override string ToString()
-    // {
-    //   var stringBuilder = new StringBuilder();
-    //   var separator = ", ";
-
-    //   foreach (var item in Toppings)
-    //   {
-    //     stringBuilder.Append($"{item}{separator}");
-    //   }
-
-    //   return $"{Crust} - {Size} - {stringBuilder.ToString().TrimEnd(separator.ToCharArray())}";
-    // }
   }
 }
